@@ -1,7 +1,6 @@
-import{buildHeader} from "./modules/header.js";
+import { buildHeader } from "./modules/header.js";
 import { buildFooter } from "./modules/footer.js";
 import { getCategories, fillGallery } from "./modules/works.js";
-
 
 // Building the site header
 buildHeader();
@@ -56,4 +55,29 @@ for (let k = 0; k < categoriesButtons.length; k++) {
       }
     }
   });
+}
+
+// Building the administrator page
+const token = window.localStorage.getItem("token");
+
+if (token !== null) {
+  // Displaying the edit mode banner
+  const edit_mode_banner = document.querySelector("#edit_mode_banner");
+  edit_mode_banner.classList.remove('hidden');
+  
+  // Changing the login item in the nav
+  const loginNavItem = document.querySelector('nav .login');
+  loginNavItem.innerText = "logout";
+
+  // Creating an edit button
+  const divEditWorks = document.querySelector(".edit_works");
+
+  const editIcon = document.createElement("img");
+  editIcon.src = "./assets/icons/edit.svg";
+
+  const edit = document.createElement("p");
+  edit.innerText = "modifier";
+
+  divEditWorks.appendChild(editIcon);
+  divEditWorks.appendChild(edit);
 }

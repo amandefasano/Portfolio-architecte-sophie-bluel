@@ -12,13 +12,17 @@
 	<script type="module" src="./src/main.js"></script>
 </head>
 <body>
+<div class="hidden" id="edit_mode_banner">
+  <img src="./assets/icons/edit_white.svg" alt="edit icon">
+  <p>Mode édition</p>
+</div>
 <header>
 	<!-- the logo and a nav (see header.js) -->
 </header>
 <main>
 	<section id="introduction">
 		<figure>
-			<img src="./assets/images/sophie-bluel.png" alt="">
+			<img src="./assets/images/sophie-bluel.png" alt="Portrait de Sophie Bluel">
 		</figure>
 		<article>
 			<h2>Designer d'espace</h2>
@@ -28,7 +32,9 @@
 		</article>
 	</section>
 	<section id="portfolio">
-		<h2>Mes Projets</h2>
+    <div class="edit_works">
+      <h2>Mes Projets</h2>
+    </div>
 		<div class="categoriesFilter">
 			<!-- categories filter buttons (see main.js)-->
 		</div>

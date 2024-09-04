@@ -7,7 +7,7 @@ export function buildHeader() {
   const headerElement = document.querySelector("header");
 
   headerElement.innerHTML = 
- `<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
+ `<a href="./index.html"><h1>Sophie Bluel <span>Architecte d'intérieur</span></h1></a>
   <nav>
 		<ul>
 			<li>
