@@ -2,31 +2,36 @@ const dialog = document.querySelector("dialog");
 
 dialog.innerHTML = 
 `
- <img src="./assets/icons/xmark.svg" alt="closing cross icon">
- <h3>Galerie photo</h3>
- <div class="modal_gallery"></div>
- <img src="./assets/icons/bar.svg" alt="bar icon">
- <button>Ajouter une photo</button>
+ <div class="close_modal">
+  <img id="close_modal" src="./assets/icons/xmark.svg" alt="closing cross icon">
+ </div>
+ <div class="modal_body">
+  <h3>Galerie photo</h3>
+  <div class="modal_gallery"></div>
+  <img src="./assets/icons/bar.svg" alt="bar icon">
+  <button>Ajouter une photo</button>
+ </div>
 `;
 
 // Importing the photos
 let works = window.localStorage.getItem('works');
 works = JSON.parse(works);
-console.log(works);
+
 const modalGalleryElement = document.querySelector('.modal_gallery');
 
 for (let i = 0; i < works.length; i++) {
   const workDiv = document.createElement('div');
   
-  const modalGalleryImg = document.createElement('img');
-  modalGalleryImg.src = works[i].imageUrl;
-
   const deleteIcon = document.createElement('img');
-  deleteIcon.src = "./assets/icons/delete.png";
+  deleteIcon.src = "./assets/icons/delete.svg";
   deleteIcon.classList.add('delete');
 
-  workDiv.appendChild(modalGalleryImg);
+  const modalGalleryImg = document.createElement('img');
+  modalGalleryImg.src = works[i].imageUrl;
+  modalGalleryImg.classList.add('modal_work');
+
   workDiv.appendChild(deleteIcon);
+  workDiv.appendChild(modalGalleryImg);
 
   modalGalleryElement.appendChild(workDiv);
 }

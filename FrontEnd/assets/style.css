@@ -425,6 +425,80 @@ footer nav ul {
 }
 
 /* Modal */
+dialog[open] {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  border: none;
+  border-radius: 10px;
+  max-width: 39.375rem; /*630px*/
+  max-height: 43rem; /*688px*/
+  height: fit-content;
+  overflow: hidden;
+}
+
+dialog::backdrop {
+  background-color: rgb(0 0 0 / 30%);
+}
+
+.close_modal {
+  display: flex;
+  justify-content: end;
+  margin: 2rem 2.25rem 0 0; /* 32px 36px 0 0 */
+}
+
+#close_modal {
+  width: 1.5rem; /*24px*/
+  cursor: pointer;
+}
+
+.modal_body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-left: 6.562rem; /*105px*/
+  padding-right: 6.562rem; /*105px*/
+}
+
+.modal_body h3 {
+  font-size: 1.625rem; /*26px*/
+  margin-bottom: 2.875rem; /* 46px */
+}
+
+.modal_gallery {
+  display: grid;
+  grid-template-columns: 4.803rem 4.803rem 4.803rem 4.803rem 4.803rem; /*76.86px*/
+  grid-template-rows: 6.41rem 6.41rem 6.41rem; /*102.57px*/
+  column-gap: 0.562rem; /*9px*/
+  row-gap: 1.812rem; /*29px*/
+  margin-bottom: 4.206rem; /* 67.3px */
+}
+
+.modal_gallery div {
+  display: flex;
+  justify-content: end;
+}
+
+.modal_gallery img {
+  width: 100%;
+}
+
 .modal_gallery .delete {
-  background-color: black;
+  position:absolute;
+  width: 1.062rem; /*17px*/
+  margin-top: 0.312rem; /*5px*/
+  margin-right: 0.312rem; /*5px*/
+  cursor: pointer;
+}
+
+.modal_body button {
+  height: 2.25rem; /*36px*/
+  /* margin-top: 2.375rem; 38px*/ 
+  /* margin-bottom: 2.812rem; /*45px */
+  border: none;
+  cursor: pointer;
+}
+
+.modal_body button:hover {
+  background-color: #0E2F28;
 }
