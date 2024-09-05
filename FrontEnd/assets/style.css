@@ -131,13 +131,22 @@ table {
 
 /* On all pages */
 body {
-  max-width: 1140px;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  margin: auto;
   font-family: "Work Sans";
   font-size: 14px;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  margin: 3.125rem 4.406rem; /*50px 70.5px*/
+}
+
+main {
+  max-width: 1140px;
+  margin: auto;
 }
 
 a:link {
@@ -151,12 +160,6 @@ a:visited {
 
 a:hover {
   font-weight: 600;
-}
-
-header {
-  display: flex;
-  justify-content: space-between;
-  margin: 50px 0;
 }
 
 nav ul {
