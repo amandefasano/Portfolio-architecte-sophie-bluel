@@ -8,6 +8,39 @@ buildHeader();
 // Building the site footer
 buildFooter();
 
+const edit_mode_banner = document.querySelector("#edit_mode_banner");
+const loginNavItem = document.querySelector("nav .login");
+const editButton = document.querySelector(".edit_works a");
+
+// Hidding the edit mode banner and buttons
+edit_mode_banner.classList.add("hidden");
+loginNavItem.innerText = "login";
+editButton.classList.add("hidden");
+
+// Building the administrator page
+const token = window.localStorage.getItem("token");
+console.log(token);
+
+if (token !== null) {
+  // Displaying the edit mode banner
+  edit_mode_banner.classList.remove("hidden");
+
+  // Changing the login item in the nav into 'logout'
+  loginNavItem.innerText = "logout";
+
+  // Displaying the edit button
+  editButton.classList.remove("hidden");
+
+  // Logging out the user
+  loginNavItem.addEventListener("click", () => {
+    // Removing the token from the local storage
+    window.localStorage.removeItem("token");
+
+    // Redirecting on the home page
+    window.location.replace("./index.html");
+  });
+}
+
 // Getting the div "gallery"
 const galleryDiv = document.querySelector(".gallery");
 
@@ -55,29 +88,4 @@ for (let k = 0; k < categoriesButtons.length; k++) {
       }
     }
   });
-}
-
-// Building the administrator page
-const token = window.localStorage.getItem("token");
-
-if (token !== null) {
-  // Displaying the edit mode banner
-  const edit_mode_banner = document.querySelector("#edit_mode_banner");
-  edit_mode_banner.classList.remove('hidden');
-  
-  // Changing the login item in the nav into 'logout'
-  const loginNavItem = document.querySelector('nav .login');
-  loginNavItem.innerText = "logout";
-
-  // Creating an edit button
-  // const divEditWorks = document.querySelector(".edit_works");
-
-  // const editIcon = document.createElement("img");
-  // editIcon.src = "./assets/icons/edit.svg";
-
-  // const edit = document.createElement("p");
-  // edit.innerText = "modifier";
-
-  divEditWorks.appendChild(editIcon);
-  divEditWorks.appendChild(edit);
 }

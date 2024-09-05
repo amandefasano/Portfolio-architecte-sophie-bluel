@@ -230,27 +230,7 @@ footer nav ul {
   margin: 2em;
 }
 
-.hidden {
-  display: none;
-}
-
 /* Home page */
-/*Edit mode banner*/
-#edit_mode_banner {
-  display: flex;
-  flex-direction: row;
-  height: 3.687rem; /*59px*/
-  justify-content: center;
-  align-items: center;
-  color: white;
-  background-color: black;
-  background-size: cover;
-}
-
-#edit_mode_banner img {
-  padding-right: 0.713rem; /*11.42px*/
-}
-
 /*Introduction section*/
 #introduction {
   display: flex;
@@ -277,7 +257,7 @@ footer nav ul {
 }
 
 /*Gallery section*/
-#portfolio .edit_works {
+.portfolio_title {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -285,17 +265,8 @@ footer nav ul {
   margin-bottom: 3.125rem; /*50px*/
 }
 
-.edit_works h2 {
+.portfolio_title h2 {
   padding-right: 1.937rem; /*31px*/
-}
-
-.edit_works a {
-  display: flex;
-  flex-direction: row;
-}
-
-.edit_works img {
-  padding-right: 0.651rem; /*10.42px*/
 }
 
 .categoriesFilter {
@@ -419,4 +390,35 @@ footer nav ul {
 #login a {
   color: #3d3d3d;
   text-decoration: underline;
+}
+
+/* Edit mode elements meant to be hidden when logout*/
+/*Edit mode banner*/
+.edit_mode_banner {
+  display: flex;
+  flex-direction: row;
+  height: 3.687rem; /*59px*/
+  justify-content: center;
+  align-items: center;
+  color: white;
+  background-color: black;
+  background-size: cover;
+}
+
+.edit_mode_banner img {
+  padding-right: 0.713rem; /*11.42px*/
+}
+
+/*Edit works button*/
+.edit_works a {
+  display: flex;
+  flex-direction: row;
+}
+
+.edit_works img {
+  padding-right: 0.651rem; /*10.42px*/
+}
+
+.hidden {
+  display: none;
 }

@@ -15,7 +15,7 @@
     <script type="module" src="./src/main.js"></script>
   </head>
   <body>
-    <div class="hidden" id="edit_mode_banner">
+    <div class="hidden edit_mode_banner">
       <img src="./assets/icons/edit_white.svg" alt="edit icon" />
       <p>Mode édition</p>
     </div>
@@ -50,12 +50,14 @@
         </article>
       </section>
       <section id="portfolio">
-        <div class="edit_works">
+        <div class="portfolio_title">
           <h2>Mes Projets</h2>
-          <a href="#">
-            <img src="./assets/icons/edit.svg" alt="edit icon" />
-            <p>modifier</p>
-          </a>
+          <div class="hidden edit_works">
+            <a href="#">
+              <img src="./assets/icons/edit.svg" alt="edit icon" />
+              <p>modifier</p>
+            </a>
+          </div>
         </div>
         <div class="categoriesFilter">
           <!-- categories filter buttons (see main.js)-->
