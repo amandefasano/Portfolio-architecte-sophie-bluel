@@ -142,6 +142,15 @@ body {
 
 a:link {
   text-decoration: none;
+  color: black;
+}
+
+a:visited {
+  color: black;
+}
+
+a:hover {
+  font-weight: 600;
 }
 
 header {
@@ -159,15 +168,6 @@ nav ul {
 nav li {
   padding: 0 1.375rem; /*22px*/
   font-size: 1rem;
-}
-
-nav a:visited {
-  color: black;
-  text-decoration: none;
-}
-
-nav a:hover {
-  color: #b1663c;
 }
 
 nav .selected {
@@ -198,6 +198,23 @@ h2 {
   font-weight: 700;
   font-size: 30px;
   color: #1d6154;
+}
+
+/*Submit buttons*/
+input[type="submit"] {
+  font-family: "Syne";
+  font-weight: 700;
+  color: white;
+  background-color: #1d6154;
+  margin: 2em auto;
+  width: 180px;
+  text-align: center;
+  border-radius: 60px;
+  cursor: pointer;
+}
+
+input[type="submit"]:hover {
+  background-color: #0e2f28;
 }
 
 footer {
@@ -256,7 +273,7 @@ footer nav ul {
   margin-bottom: 0.5em;
 }
 
-/* Gallery section */
+/*Gallery section*/
 #portfolio .edit_works {
   display: flex;
   flex-direction: row;
@@ -267,6 +284,11 @@ footer nav ul {
 
 .edit_works h2 {
   padding-right: 1.937rem; /*31px*/
+}
+
+.edit_works a {
+  display: flex;
+  flex-direction: row;
 }
 
 .edit_works img {
@@ -314,7 +336,7 @@ footer nav ul {
   width: 100%;
 }
 
-/* Contact section */
+/*Contact section*/
 #contact {
   width: 50%;
   margin: auto;
@@ -344,17 +366,6 @@ footer nav ul {
 #contact textarea {
   border: none;
   box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
-}
-
-input[type="submit"] {
-  font-family: "Syne";
-  font-weight: 700;
-  color: white;
-  background-color: #1d6154;
-  margin: 2em auto;
-  width: 180px;
-  text-align: center;
-  border-radius: 60px;
 }
 
 /* Login page */
@@ -400,21 +411,6 @@ input[type="submit"] {
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-
-#login button {
-  margin: 0.437rem 0 1.75rem; /*7px 0 28px*/
-  width: 11.187rem; /*179px*/
-  height: 2.25rem; /*36px*/
-  border: none;
-  border-radius: 60px;
-  color: #ffffff;
-  background-color: #1d6154;
-  cursor: pointer;
-}
-
-#login button:hover {
-  background-color: #0e2f28;
 }
 
 #login a {

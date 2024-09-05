@@ -8,8 +8,10 @@ export function buildFooter() {
 
     footerElement.innerHTML = 
    `<nav>
-		<ul>
-			<li>Mentions Légales</li>
-		</ul>
-	</nav>`
+		  <ul>
+			  <li>
+			    <a href="#">Mentions Légales</a>
+			  </li>
+		  </ul>
+	  </nav>`
 }

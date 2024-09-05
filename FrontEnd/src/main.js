@@ -65,18 +65,18 @@ if (token !== null) {
   const edit_mode_banner = document.querySelector("#edit_mode_banner");
   edit_mode_banner.classList.remove('hidden');
   
-  // Changing the login item in the nav
+  // Changing the login item in the nav into 'logout'
   const loginNavItem = document.querySelector('nav .login');
   loginNavItem.innerText = "logout";
 
   // Creating an edit button
-  const divEditWorks = document.querySelector(".edit_works");
+  // const divEditWorks = document.querySelector(".edit_works");
 
-  const editIcon = document.createElement("img");
-  editIcon.src = "./assets/icons/edit.svg";
+  // const editIcon = document.createElement("img");
+  // editIcon.src = "./assets/icons/edit.svg";
 
-  const edit = document.createElement("p");
-  edit.innerText = "modifier";
+  // const edit = document.createElement("p");
+  // edit.innerText = "modifier";
 
   divEditWorks.appendChild(editIcon);
   divEditWorks.appendChild(edit);

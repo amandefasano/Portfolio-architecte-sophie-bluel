@@ -19,7 +19,9 @@ export function buildHeader() {
 			<li>
 			 <a class='login' href="/FrontEnd/login.html">login</a>
 			</li>
-			<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
+			<li>
+			<a href="#"><img src="./assets/icons/instagram.png" alt="Instagram"></a>
+			</li>
 		</ul>
 	</nav>`;
 
