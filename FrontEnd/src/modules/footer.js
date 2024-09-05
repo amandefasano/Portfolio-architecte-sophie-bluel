@@ -1,17 +1,12 @@
-/**
- 
- * Builds the site footer element.
- 
- */
-export function buildFooter() {
-    const footerElement = document.querySelector("footer");
+const footerElement = document.querySelector("footer");
 
-    footerElement.innerHTML = 
-   `<nav>
+footerElement.innerHTML = 
+`<nav>
 		  <ul>
 			  <li>
 			    <a href="#">Mentions Légales</a>
 			  </li>
 		  </ul>
-	  </nav>`
-}
+</nav>`;
+
+export const footer = footerElement;

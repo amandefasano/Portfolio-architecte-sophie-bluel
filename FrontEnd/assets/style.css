@@ -203,8 +203,8 @@ h2 {
   color: #1d6154;
 }
 
-/*Submit buttons*/
-input[type="submit"] {
+/*Buttons*/
+input[type="submit"], dialog button {
   font-family: "Syne";
   font-weight: 700;
   color: white;
@@ -410,9 +410,10 @@ footer nav ul {
 }
 
 /*Edit works button*/
-.edit_works a {
+.edit_works {
   display: flex;
   flex-direction: row;
+  cursor: pointer;
 }
 
 .edit_works img {

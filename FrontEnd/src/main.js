@@ -1,25 +1,19 @@
-import { buildHeader } from "./modules/header.js";
-import { buildFooter } from "./modules/footer.js";
+import { header } from "./modules/header.js";
+import { footer } from "./modules/footer.js";
+import { modal } from "./modules/modal.js";
 import { getCategories, fillGallery } from "./modules/works.js";
 
-// Building the site header
-buildHeader();
-
-// Building the site footer
-buildFooter();
-
-const edit_mode_banner = document.querySelector("#edit_mode_banner");
-const loginNavItem = document.querySelector("nav .login");
-const editButton = document.querySelector(".edit_works a");
-
 // Hidding the edit mode banner and buttons
+const edit_mode_banner = document.querySelector(".edit_mode_banner");
+const loginNavItem = document.querySelector("nav .login");
+const editButton = document.querySelector(".edit_works");
+
 edit_mode_banner.classList.add("hidden");
 loginNavItem.innerText = "login";
 editButton.classList.add("hidden");
 
 // Building the administrator page
 const token = window.localStorage.getItem("token");
-console.log(token);
 
 if (token !== null) {
   // Displaying the edit mode banner
@@ -30,16 +24,21 @@ if (token !== null) {
 
   // Displaying the edit button
   editButton.classList.remove("hidden");
-
-  // Logging out the user
-  loginNavItem.addEventListener("click", () => {
-    // Removing the token from the local storage
-    window.localStorage.removeItem("token");
-
-    // Redirecting on the home page
-    window.location.replace("./index.html");
-  });
 }
+
+// Modal
+editButton.addEventListener('click', () => {
+  modal.showModal();
+})
+
+// Logging out the user
+loginNavItem.addEventListener("click", () => {
+  // Removing the token from the local storage
+  window.localStorage.removeItem("token");
+
+  // Redirecting to the home page
+  window.location.replace("./index.html#");
+});
 
 // Getting the div "gallery"
 const galleryDiv = document.querySelector(".gallery");
