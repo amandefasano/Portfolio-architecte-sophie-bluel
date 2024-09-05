@@ -423,3 +423,8 @@ footer nav ul {
 .hidden {
   display: none;
 }
+
+/* Modal */
+.modal_gallery .delete {
+  background-color: black;
+}

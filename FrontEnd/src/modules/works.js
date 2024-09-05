@@ -31,7 +31,15 @@ export async function getCategories() {
  */
 export async function fillGallery() {
   const galleryDiv = document.querySelector(".gallery");
-  const works = await getWorks();
+  
+  let works = window.localStorage.getItem('works');
+  if (works === null) {
+    works = await getWorks();
+    const worksValues = JSON.stringify(works);
+    window.localStorage.setItem('works', worksValues);
+  } else {
+    works = JSON.parse(works);
+  }
 
   for (let i = 0; i < works.length; i++) {
     // Creating the elements in the div

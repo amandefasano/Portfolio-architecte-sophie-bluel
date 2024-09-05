@@ -47,7 +47,15 @@ const galleryDiv = document.querySelector(".gallery");
 const categoriesFilterDiv = document.querySelector(".categoriesFilter");
 
 // Getting the categories
-const categories = await getCategories();
+let categories = window.localStorage.getItem('categories');
+if (categories === null) {
+  categories = await getCategories();
+  const cateogriesValues = JSON.stringify(categories);
+  window.localStorage.setItem('categories', cateogriesValues);
+} else{
+  categories = JSON.parse(categories);
+}
+
 // Building a category "Tous"
 const categoryAll = {};
 categoryAll.id = 0;
