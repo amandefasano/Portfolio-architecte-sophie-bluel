@@ -1,7 +1,7 @@
 import { header } from "./modules/header.js";
 import { footer } from "./modules/footer.js";
-import { modal } from "./modules/modal.js";
-import { getCategories, fillGallery } from "./modules/works.js";
+import { modal, isInDialog } from "./modules/modal.js";
+import { deleteWork, getCategories, fillGallery } from "./modules/works.js";
 
 // Hidding the edit mode banner and buttons
 const edit_mode_banner = document.querySelector(".edit_mode_banner");
@@ -27,9 +27,42 @@ if (token !== null) {
 }
 
 // Modal
-editButton.addEventListener('click', () => {
+const closeButton = document.querySelector("#close_modal");
+
+// Opening the modal and preventing the autofocus behavior
+editButton.addEventListener("click", () => {
+  modal.inert = true;
   modal.showModal();
-})
+  modal.inert = false;
+});
+
+// Closing the modal when click on the background
+modal.addEventListener("click", (event) => {
+  if (!isInDialog(event, modal)) {
+    modal.close();
+  }
+});
+
+// Closing the modal when click on close button
+closeButton.addEventListener("click", () => {
+  modal.close();
+});
+
+// Deleting a work
+const modalWorks = document.querySelectorAll(".modal_gallery")[0].children;
+
+for (let i = 0; i < modalWorks.length; i++) {
+  const deleteWorkButton = modalWorks[i].firstChild;
+  const work = modalWorks[i].lastChild;
+  const work_id = work.getAttribute("work_id");
+  
+  deleteWorkButton.addEventListener("click", (event) => {
+    event.preventDefault();
+    deleteWork(work_id);
+    window.localStorage.removeItem('works');
+    console.log(`J'ai cliqué dele supprimer`);
+  });
+}
 
 // Logging out the user
 loginNavItem.addEventListener("click", () => {
@@ -47,12 +80,12 @@ const galleryDiv = document.querySelector(".gallery");
 const categoriesFilterDiv = document.querySelector(".categoriesFilter");
 
 // Getting the categories
-let categories = window.localStorage.getItem('categories');
+let categories = window.localStorage.getItem("categories");
 if (categories === null) {
   categories = await getCategories();
   const cateogriesValues = JSON.stringify(categories);
-  window.localStorage.setItem('categories', cateogriesValues);
-} else{
+  window.localStorage.setItem("categories", cateogriesValues);
+} else {
   categories = JSON.parse(categories);
 }
 

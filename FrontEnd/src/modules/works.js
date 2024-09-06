@@ -4,7 +4,7 @@
 
  * @returns {Array} - A javascript array that contains all the works.
  
- */
+*/
 export async function getWorks() {
   return await fetch("http://localhost:5678/api/works").then((response) =>
     response.json()
@@ -13,11 +13,31 @@ export async function getWorks() {
 
 /**
  
+ * Sends a request to the api to delete the specified work.
+
+ * @param {Number} id - The id of the work that is to be deleted.
+ 
+*/
+export function deleteWork(id) {
+  const token = window.localStorage.getItem('token');
+
+  if (token !== null) {
+    fetch('http://localhost:5678/api/works/' + id, {
+      method: 'DELETE',
+      headers: {'Authorization': 'Bearer ' + token},
+      body: null
+    })
+  }
+  
+}
+
+/**
+ 
  * Sends a request to the api to get all the categories.
 
  * @returns {Array} - A javascript array that contains all the categories.
  
- */
+*/
 export async function getCategories() {
   return await fetch("http://localhost:5678/api/categories").then((response) =>
     response.json()
@@ -28,7 +48,7 @@ export async function getCategories() {
  
  * Fills up the gallery div with figure elements that contain an image and a caption.
  
- */
+*/
 export async function fillGallery() {
   const galleryDiv = document.querySelector(".gallery");
   

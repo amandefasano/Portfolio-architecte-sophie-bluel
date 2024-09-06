@@ -416,6 +416,10 @@ footer nav ul {
   cursor: pointer;
 }
 
+.edit_works:hover {
+  font-weight: 600;
+}
+
 .edit_works img {
   padding-right: 0.651rem; /*10.42px*/
 }
@@ -483,7 +487,7 @@ dialog::backdrop {
   width: 100%;
 }
 
-.modal_gallery .delete {
+.modal_gallery .delete_work {
   position:absolute;
   width: 1.062rem; /*17px*/
   margin-top: 0.312rem; /*5px*/
