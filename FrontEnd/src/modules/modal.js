@@ -14,27 +14,30 @@ dialog.innerHTML = `
 
 // Importing the photos
 let works = window.localStorage.getItem("works");
-works = JSON.parse(works);
 
-const modalGalleryElement = document.querySelector(".modal_gallery");
+if (works !== null) {
+  works = JSON.parse(works);
 
-for (let i = 0; i < works.length; i++) {
-  const workDiv = document.createElement("div");
+  const modalGalleryElement = document.querySelector(".modal_gallery");
 
-  const deleteIcon = document.createElement("img");
-  deleteIcon.src = "./assets/icons/delete.svg";
-  deleteIcon.alt = "trash can icon";
-  deleteIcon.classList.add("delete_work");
+  for (let i = 0; i < works.length; i++) {
+    const workDiv = document.createElement("div");
 
-  const modalGalleryImg = document.createElement("img");
-  modalGalleryImg.src = works[i].imageUrl;
-  modalGalleryImg.setAttribute("work_id", works[i].id);
-  modalGalleryImg.classList.add("modal_work");
+    const deleteIcon = document.createElement("img");
+    deleteIcon.src = "./assets/icons/delete.svg";
+    deleteIcon.alt = "trash can icon";
+    deleteIcon.classList.add("delete_work");
 
-  workDiv.appendChild(deleteIcon);
-  workDiv.appendChild(modalGalleryImg);
+    const modalGalleryImg = document.createElement("img");
+    modalGalleryImg.src = works[i].imageUrl;
+    modalGalleryImg.setAttribute("work_id", works[i].id);
+    modalGalleryImg.classList.add("modal_work");
 
-  modalGalleryElement.appendChild(workDiv);
+    workDiv.appendChild(deleteIcon);
+    workDiv.appendChild(modalGalleryImg);
+
+    modalGalleryElement.appendChild(workDiv);
+  }
 }
 
 export const modal = dialog;

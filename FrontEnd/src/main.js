@@ -12,67 +12,6 @@ edit_mode_banner.classList.add("hidden");
 loginNavItem.innerText = "login";
 editButton.classList.add("hidden");
 
-// Building the administrator page
-const token = window.localStorage.getItem("token");
-
-if (token !== null) {
-  // Displaying the edit mode banner
-  edit_mode_banner.classList.remove("hidden");
-
-  // Changing the login item in the nav into 'logout'
-  loginNavItem.innerText = "logout";
-
-  // Displaying the edit button
-  editButton.classList.remove("hidden");
-}
-
-// Modal
-const closeButton = document.querySelector("#close_modal");
-
-// Opening the modal and preventing the autofocus behavior
-editButton.addEventListener("click", () => {
-  modal.inert = true;
-  modal.showModal();
-  modal.inert = false;
-});
-
-// Closing the modal when click on the background
-modal.addEventListener("click", (event) => {
-  if (!isInDialog(event, modal)) {
-    modal.close();
-  }
-});
-
-// Closing the modal when click on close button
-closeButton.addEventListener("click", () => {
-  modal.close();
-});
-
-// Deleting a work
-const modalWorks = document.querySelectorAll(".modal_gallery")[0].children;
-
-for (let i = 0; i < modalWorks.length; i++) {
-  const deleteWorkButton = modalWorks[i].firstChild;
-  const work = modalWorks[i].lastChild;
-  const work_id = work.getAttribute("work_id");
-  
-  deleteWorkButton.addEventListener("click", (event) => {
-    event.preventDefault();
-    deleteWork(work_id);
-    window.localStorage.removeItem('works');
-    console.log(`J'ai cliqué dele supprimer`);
-  });
-}
-
-// Logging out the user
-loginNavItem.addEventListener("click", () => {
-  // Removing the token from the local storage
-  window.localStorage.removeItem("token");
-
-  // Redirecting to the home page
-  window.location.replace("./index.html#");
-});
-
 // Getting the div "gallery"
 const galleryDiv = document.querySelector(".gallery");
 
@@ -129,3 +68,64 @@ for (let k = 0; k < categoriesButtons.length; k++) {
     }
   });
 }
+
+// Building the administrator page
+const token = window.localStorage.getItem("token");
+
+if (token !== null) {
+  // Displaying the edit mode banner
+  edit_mode_banner.classList.remove("hidden");
+
+  // Changing the login item in the nav into 'logout'
+  loginNavItem.innerText = "logout";
+
+  // Displaying the edit button
+  editButton.classList.remove("hidden");
+}
+
+// Modal
+const closeButton = document.querySelector("#close_modal");
+
+// Opening the modal and preventing the autofocus behavior
+editButton.addEventListener("click", () => {
+  modal.inert = true;
+  modal.showModal();
+  modal.inert = false;
+});
+
+// Closing the modal when click on the background
+modal.addEventListener("click", (event) => {
+  if (!isInDialog(event, modal)) {
+    modal.close();
+  }
+});
+
+// Closing the modal when click on close button
+closeButton.addEventListener("click", () => {
+  modal.close();
+});
+
+// Deleting a work
+const modalWorks = document.querySelectorAll(".modal_gallery")[0].children;
+
+for (let i = 0; i < modalWorks.length; i++) {
+  const deleteWorkButton = modalWorks[i].firstChild;
+  const work = modalWorks[i].lastChild;
+  const work_id = work.getAttribute("work_id");
+  
+  deleteWorkButton.addEventListener("click", (event) => {
+    event.preventDefault();
+    deleteWork(work_id);
+    window.localStorage.removeItem('works');
+    window.localStorage.getItem('works');
+  });
+}
+
+// Logging out the user
+loginNavItem.addEventListener("click", () => {
+  // Removing the token from the local storage
+  window.localStorage.removeItem("token");
+
+  // Redirecting to the home page
+  window.location.replace("./index.html#");
+});
