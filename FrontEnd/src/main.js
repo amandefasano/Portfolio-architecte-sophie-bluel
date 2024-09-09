@@ -1,8 +1,10 @@
 import { header } from "./modules/header.js";
 import { footer } from "./modules/footer.js";
 import { modal, isInDialog } from "./modules/modal.js";
-import { deleteWork, getCategories, fillGallery } from "./modules/works.js";
+import { getWorks, deleteWork, getCategories, fillGallery } from "./modules/works.js";
 
+
+console.log('par là en haut');
 // Hidding the edit mode banner and buttons
 const edit_mode_banner = document.querySelector(".edit_mode_banner");
 const loginNavItem = document.querySelector("nav .login");
@@ -83,6 +85,7 @@ if (token !== null) {
   editButton.classList.remove("hidden");
 }
 
+console.log('par là en bas');
 // Modal
 const closeButton = document.querySelector("#close_modal");
 
@@ -108,16 +111,22 @@ closeButton.addEventListener("click", () => {
 // Deleting a work
 const modalWorks = document.querySelectorAll(".modal_gallery")[0].children;
 
+// on each delete button
 for (let i = 0; i < modalWorks.length; i++) {
   const deleteWorkButton = modalWorks[i].firstChild;
   const work = modalWorks[i].lastChild;
   const work_id = work.getAttribute("work_id");
   
+  // when the i delete button is clicked
   deleteWorkButton.addEventListener("click", (event) => {
     event.preventDefault();
     deleteWork(work_id);
     window.localStorage.removeItem('works');
-    window.localStorage.getItem('works');
+    
+    // setting the works in the local storage back
+    // let works = getWorks();
+    // JSON.parse(works);
+    // window.localStorage.setItem('works', works);
   });
 }
 

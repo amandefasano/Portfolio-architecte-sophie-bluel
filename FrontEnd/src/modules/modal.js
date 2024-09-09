@@ -1,3 +1,7 @@
+import { getWorks } from "./works.js";
+
+console.log('par ici');
+
 const dialog = document.querySelector("dialog");
 
 dialog.innerHTML = `
@@ -17,8 +21,11 @@ let works = window.localStorage.getItem("works");
 
 if (works !== null) {
   works = JSON.parse(works);
+} else {
+  works = await getWorks();
+}
 
-  const modalGalleryElement = document.querySelector(".modal_gallery");
+const modalGalleryElement = document.querySelector(".modal_gallery");
 
   for (let i = 0; i < works.length; i++) {
     const workDiv = document.createElement("div");
@@ -38,7 +45,6 @@ if (works !== null) {
 
     modalGalleryElement.appendChild(workDiv);
   }
-}
 
 export const modal = dialog;
 
