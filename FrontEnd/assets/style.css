@@ -451,6 +451,10 @@ dialog::backdrop {
   margin: 2rem 2.25rem 0 0; /* 32px 36px 0 0 */
 }
 
+#go_back {
+  cursor: pointer;
+}
+
 #close_modal {
   width: 1.5rem; /*24px*/
   cursor: pointer;
@@ -506,3 +510,4 @@ dialog::backdrop {
 .modal_body button:hover {
   background-color: #0E2F28;
 }
+
