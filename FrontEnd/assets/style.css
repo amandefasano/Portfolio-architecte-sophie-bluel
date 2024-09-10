@@ -478,12 +478,12 @@ dialog::backdrop {
   margin-bottom: 4.206rem; /* 67.3px */
 }
 
-.modal_gallery div {
+.modal_gallery figure {
   display: flex;
   justify-content: end;
 }
 
-.modal_gallery img {
+.modal_gallery .modal_work {
   width: 100%;
 }
 

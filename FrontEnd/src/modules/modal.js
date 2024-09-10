@@ -1,7 +1,6 @@
 import { getWorks } from "./works.js";
 
-console.log('par ici');
-
+// Building the modal
 const dialog = document.querySelector("dialog");
 
 dialog.innerHTML = `
@@ -23,28 +22,35 @@ if (works !== null) {
   works = JSON.parse(works);
 } else {
   works = await getWorks();
+  const worksValues = JSON.stringify(works);
+  window.localStorage.setItem("works", worksValues);
 }
 
 const modalGalleryElement = document.querySelector(".modal_gallery");
 
-  for (let i = 0; i < works.length; i++) {
-    const workDiv = document.createElement("div");
+for (let i = 0; i < works.length; i++) {
+  // Building the figure which will contain the image and the delete button
+  const workFigure = document.createElement("figure");
 
-    const deleteIcon = document.createElement("img");
-    deleteIcon.src = "./assets/icons/delete.svg";
-    deleteIcon.alt = "trash can icon";
-    deleteIcon.classList.add("delete_work");
+  // Building the delete button
+  const deleteIcon = document.createElement("img");
+  deleteIcon.src = "./assets/icons/delete.svg";
+  deleteIcon.alt = "trash can icon";
+  deleteIcon.classList.add("delete_work");
 
-    const modalGalleryImg = document.createElement("img");
-    modalGalleryImg.src = works[i].imageUrl;
-    modalGalleryImg.setAttribute("work_id", works[i].id);
-    modalGalleryImg.classList.add("modal_work");
+  // Building the image
+  const modalGalleryImg = document.createElement("img");
+  modalGalleryImg.src = works[i].imageUrl;
+  modalGalleryImg.setAttribute("work_id", works[i].id);
+  modalGalleryImg.classList.add("modal_work");
 
-    workDiv.appendChild(deleteIcon);
-    workDiv.appendChild(modalGalleryImg);
+  // Appending them to the div
+  workFigure.appendChild(deleteIcon);
+  workFigure.appendChild(modalGalleryImg);
 
-    modalGalleryElement.appendChild(workDiv);
-  }
+  // Appending the div to the gallery
+  modalGalleryElement.appendChild(workFigure);
+}
 
 export const modal = dialog;
 

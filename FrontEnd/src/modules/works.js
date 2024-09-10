@@ -18,11 +18,11 @@ export async function getWorks() {
  * @param {Number} id - The id of the work that is to be deleted.
  
 */
-export function deleteWork(id) {
+export async function deleteWork(id) {
   const token = window.localStorage.getItem('token');
 
   if (token !== null) {
-    fetch('http://localhost:5678/api/works/' + id, {
+    return await fetch('http://localhost:5678/api/works/' + id, {
       method: 'DELETE',
       headers: {'Authorization': 'Bearer ' + token},
       body: null
@@ -53,12 +53,12 @@ export async function fillGallery() {
   const galleryDiv = document.querySelector(".gallery");
   
   let works = window.localStorage.getItem('works');
-  if (works === null) {
+  if (works !== null) {
+    works = JSON.parse(works);
+  } else {
     works = await getWorks();
     const worksValues = JSON.stringify(works);
     window.localStorage.setItem('works', worksValues);
-  } else {
-    works = JSON.parse(works);
   }
 
   for (let i = 0; i < works.length; i++) {
@@ -73,10 +73,11 @@ export async function fillGallery() {
     figureElement.appendChild(imgElement);
     figureElement.appendChild(figcaptionElement);
 
-    // Giving a category_name to the figure
-    figureElement.setAttribute("category_name", works[i].category.name)
+    // Giving a category_name and an id to the figure
+    figureElement.setAttribute("category_name", works[i].category.name);
+    figureElement.setAttribute("work_id", works[i].id);
 
-    // Append figureElement to the div "gallery"
+    // Appending figureElement to the div "gallery"
     galleryDiv.appendChild(figureElement);
   }
 }
