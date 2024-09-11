@@ -5,13 +5,13 @@ headerElement.innerHTML =
 <nav>
 	<ul>
 		<li>
-		 <a href="index.html#portfolio">projets</a>
+		 <a href="/index.html#portfolio">projets</a>
 		</li>
 		<li>
-		 <a href="index.html#contact">contact</a>
+		 <a href="/index.html#contact">contact</a>
 		</li>
 		<li>
-			<a class='login' href="/FrontEnd/login.html">login</a>
+			<a class='login' href="/login.html">login</a>
 		</li>
 		<li>
 		 <a href="#"><img src="./assets/icons/instagram.png" alt="Instagram"></a>

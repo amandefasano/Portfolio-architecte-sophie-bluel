@@ -1,7 +1,7 @@
 import { header } from "./modules/header.js";
 import { footer } from "./modules/footer.js";
 import { categoriesFilter } from "./modules/categories_filter.js";
-import { modal, isInDialog } from "./modules/modal.js";
+import { manageWorksModal } from "./pages/manage_works_modal.js"
 import { deleteWork, fillGallery } from "./modules/works.js";
 
 // Hidding the edit mode banner and buttons
@@ -31,25 +31,12 @@ if (token !== null) {
 }
 
 // Modal
-const closeButton = document.querySelector("#close_modal");
 
 // Opening the modal and preventing the autofocus behavior
 editButton.addEventListener("click", () => {
-  modal.inert = true;
-  modal.showModal();
-  modal.inert = false;
-});
-
-// Closing the modal when click on the background
-modal.addEventListener("click", (event) => {
-  if (!isInDialog(event, modal)) {
-    modal.close();
-  }
-});
-
-// Closing the modal when click on close button
-closeButton.addEventListener("click", () => {
-  modal.close();
+  manageWorksModal.inert = true;
+  manageWorksModal.showModal();
+  manageWorksModal.inert = false;
 });
 
 // Deleting a work

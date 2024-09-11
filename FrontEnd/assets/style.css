@@ -445,9 +445,9 @@ dialog::backdrop {
   background-color: rgb(0 0 0 / 30%);
 }
 
-.close_modal {
+.modal_header {
   display: flex;
-  justify-content: end;
+  justify-content: space-between;
   margin: 2rem 2.25rem 0 0; /* 32px 36px 0 0 */
 }
 
@@ -455,7 +455,7 @@ dialog::backdrop {
   cursor: pointer;
 }
 
-#close_modal {
+.close_modal {
   width: 1.5rem; /*24px*/
   cursor: pointer;
 }

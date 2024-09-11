@@ -5,10 +5,32 @@
  * @returns {Array} - A javascript array that contains all the works.
  
 */
-export async function getWorks() {
+async function _getWorks() {
   return await fetch("http://localhost:5678/api/works").then((response) =>
     response.json()
   );
+}
+
+/**
+ 
+ * Gets the works from the local storage if stored there. If not stored in the local storage, 
+ * gets them from the api and stores them in the local storage.
+
+ * @returns {Array} - A Javascript array that contains all the works. 
+ 
+*/
+export async function getWorks() {
+  let works = window.localStorage.getItem("works");
+
+  if (works !== null) {
+    works = JSON.parse(works);
+  } else {
+    works = await _getWorks();
+    const worksValues = JSON.stringify(works);
+    window.localStorage.setItem("works", worksValues);
+  }
+
+  return works;
 }
 
 /**
@@ -19,16 +41,15 @@ export async function getWorks() {
  
 */
 export async function deleteWork(id) {
-  const token = window.localStorage.getItem('token');
+  const token = window.localStorage.getItem("token");
 
   if (token !== null) {
-    return await fetch('http://localhost:5678/api/works/' + id, {
-      method: 'DELETE',
-      headers: {'Authorization': 'Bearer ' + token},
-      body: null
-    })
+    return await fetch("http://localhost:5678/api/works/" + id, {
+      method: "DELETE",
+      headers: { Authorization: "Bearer " + token },
+      body: null,
+    });
   }
-  
 }
 
 /**
@@ -51,15 +72,8 @@ export async function getCategories() {
 */
 export async function fillGallery() {
   const galleryDiv = document.querySelector(".gallery");
-  
-  let works = window.localStorage.getItem('works');
-  if (works !== null) {
-    works = JSON.parse(works);
-  } else {
-    works = await getWorks();
-    const worksValues = JSON.stringify(works);
-    window.localStorage.setItem('works', worksValues);
-  }
+
+let works = await getWorks();
 
   for (let i = 0; i < works.length; i++) {
     // Creating the elements in the div
@@ -81,3 +95,5 @@ export async function fillGallery() {
     galleryDiv.appendChild(figureElement);
   }
 }
+
+
