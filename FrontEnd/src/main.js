@@ -2,7 +2,7 @@ import { header } from "./modules/header.js";
 import { footer } from "./modules/footer.js";
 import { categoriesFilter } from "./modules/categories_filter.js";
 import { manageWorksModal } from "./pages/manage_works_modal.js"
-import { deleteWork, fillGallery } from "./modules/works.js";
+import { fillGallery } from "./modules/works.js";
 
 // Hidding the edit mode banner and buttons
 const edit_mode_banner = document.querySelector(".edit_mode_banner");
@@ -30,45 +30,13 @@ if (token !== null) {
   editButton.classList.remove("hidden");
 }
 
-// Modal
-
+// Manage works modal
 // Opening the modal and preventing the autofocus behavior
 editButton.addEventListener("click", () => {
   manageWorksModal.inert = true;
   manageWorksModal.showModal();
   manageWorksModal.inert = false;
 });
-
-// Deleting a work
-const modalWorks = document.querySelectorAll(".modal_gallery")[0].children;
-
-// on each delete button
-for (let i = 0; i < modalWorks.length; i++) {
-  const deleteWorkButton = modalWorks[i].firstChild;
-  const work = modalWorks[i].lastChild;
-  const work_id = work.getAttribute("work_id");
-
-  const galleryWorks = document.querySelector(".gallery").children;
-  // console.log(galleryWorks);
-
-  // when the delete button number i is clicked
-  deleteWorkButton.addEventListener("click", async (event) => {
-    event.preventDefault();
-    let response = await deleteWork(work_id);
-    
-    if(response.ok) {
-    // updating the local storage
-    window.localStorage.removeItem("works");
-
-    // updating the modal gallery
-    modalWorks[i].parentNode.removeChild(modalWorks[i]);
-
-    // updating the gallery
-    galleryWorks[i].parentNode.removeChild(galleryWorks[i]);
-    }
-    
-  });
-}
 
 // Logging out the user
 loginNavItem.addEventListener("click", () => {

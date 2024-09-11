@@ -37,21 +37,21 @@ const galleryDiv = document.querySelector(".gallery");
 const categoriesButtons = document.querySelectorAll(".categoriesFilter button");
 
 // Adding an eventListener on each button
-for (let k = 0; k < categoriesButtons.length; k++) {
-  categoriesButtons[k].addEventListener("click", async () => {
+categoriesButtons.forEach((button) => {
+  button.addEventListener("click", async () => {
     const figures = galleryDiv.children;
 
     for (let l = 0; l < figures.length; l++) {
       figures[l].classList.add("hidden");
 
       const figure_category_name = figures[l].getAttribute("category_name");
-      if (categoriesButtons[k].innerText === "Tous") {
+      if (button.innerText === "Tous") {
         figures[l].classList.remove("hidden");
-      } else if (figure_category_name === categoriesButtons[k].innerText) {
+      } else if (figure_category_name === button.innerText) {
         figures[l].classList.remove("hidden");
       }
     }
   });
-}
+});
 
 export const categoriesFilter = categoriesFilterDiv;

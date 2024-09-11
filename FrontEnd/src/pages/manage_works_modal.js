@@ -1,6 +1,10 @@
 import { getWorks } from "../modules/works.js";
+import { deleteWork } from "../modules/works.js";
 import { addWorkModal } from "./add_work_modal.js";
-import { closeDialogOnButtonClick, closeDialogOnBackdropClick } from "../modules/modal.js";
+import {
+  closeDialogOnButtonClick,
+  closeDialogOnBackdropClick,
+} from "../modules/modal.js";
 
 // Building the manage works modal
 const manageWorksDialog = document.getElementById("manage_works_modal");
@@ -47,9 +51,46 @@ for (let i = 0; i < works.length; i++) {
   modalGalleryElement.appendChild(workFigure);
 }
 
+// Deleting a work
+const modalWorks = document.querySelectorAll(".modal_gallery")[0].children;
+
+// on each delete button
+for (let modalWork of modalWorks) {
+  const deleteWorkButton = modalWork.firstChild;
+  const work = modalWork.lastChild;
+  const work_id = work.getAttribute("work_id");
+
+  // when the delete button is clicked
+  deleteWorkButton.addEventListener("click", async (event) => {
+    event.preventDefault();
+    let response = await deleteWork(work_id);
+
+    if (response.ok) {
+      // updating the local storage
+      window.localStorage.removeItem("works");
+
+      // updating the modal gallery
+      modalWork.parentNode.removeChild(modalWork);
+
+      // updating the gallery
+      setTimeout(() => { 
+        const galleryWorks = document.querySelector(".gallery").children; 
+      
+        for (let galleryWork of galleryWorks) {
+          if(galleryWork.getAttribute("work_id") === work_id) {
+            galleryWork.parentNode.removeChild(galleryWork);
+          }
+        }
+      }, 1000);
+    }
+  });
+}
+
 // When click on Add a picture button:
 // Closing the modal, opening the add work modal and preventing the autofocus behavior
-const modalAddPictureButton = document.querySelector("#manage_works_modal .modal_body button");
+const modalAddPictureButton = document.querySelector(
+  "#manage_works_modal .modal_body button"
+);
 
 modalAddPictureButton.addEventListener("click", () => {
   manageWorksDialog.close();
