@@ -76,6 +76,15 @@ closeDialogOnBackdropClick(manageWorksDialog);
 
 export const manageWorksModal = manageWorksDialog;
 
+/**
+ 
+ * Adds an event listener on the click of the specified button, which deletes the specified work.
+
+ * @param {HTMLElement} button - The HTML element on which to click in order to delete the work
+
+ * @param {Number} id - The id of the work that is to be deleted
+ 
+*/
 function handleDeletion(button, id) {
   button.addEventListener("click", async (event) => {
     event.preventDefault();
