@@ -73,7 +73,7 @@ export async function getCategories() {
 export async function fillGallery() {
   const galleryDiv = document.querySelector(".gallery");
 
-let works = await getWorks();
+  let works = await getWorks();
 
   for (let i = 0; i < works.length; i++) {
     // Creating the elements in the div
@@ -95,5 +95,3 @@ let works = await getWorks();
     galleryDiv.appendChild(figureElement);
   }
 }
-
-

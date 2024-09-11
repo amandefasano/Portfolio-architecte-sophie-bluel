@@ -37,53 +37,21 @@ for (let i = 0; i < works.length; i++) {
   deleteIcon.alt = "trash can icon";
   deleteIcon.classList.add("delete_work");
 
+  // Handling deletion
+  handleDeletion(deleteIcon, works[i].id);
+
   // Building the image
   const modalGalleryImg = document.createElement("img");
   modalGalleryImg.src = works[i].imageUrl;
-  modalGalleryImg.setAttribute("work_id", works[i].id);
   modalGalleryImg.classList.add("modal_work");
 
   // Appending them to the div
   workFigure.appendChild(deleteIcon);
   workFigure.appendChild(modalGalleryImg);
+  workFigure.setAttribute("work_id", works[i].id);
 
   // Appending the div to the gallery
   modalGalleryElement.appendChild(workFigure);
-}
-
-// Deleting a work
-const modalWorks = document.querySelectorAll(".modal_gallery")[0].children;
-
-// on each delete button
-for (let modalWork of modalWorks) {
-  const deleteWorkButton = modalWork.firstChild;
-  const work = modalWork.lastChild;
-  const work_id = work.getAttribute("work_id");
-
-  // when the delete button is clicked
-  deleteWorkButton.addEventListener("click", async (event) => {
-    event.preventDefault();
-    let response = await deleteWork(work_id);
-
-    if (response.ok) {
-      // updating the local storage
-      window.localStorage.removeItem("works");
-
-      // updating the modal gallery
-      modalWork.parentNode.removeChild(modalWork);
-
-      // updating the gallery
-      setTimeout(() => { 
-        const galleryWorks = document.querySelector(".gallery").children; 
-      
-        for (let galleryWork of galleryWorks) {
-          if(galleryWork.getAttribute("work_id") === work_id) {
-            galleryWork.parentNode.removeChild(galleryWork);
-          }
-        }
-      }, 1000);
-    }
-  });
 }
 
 // When click on Add a picture button:
@@ -107,3 +75,27 @@ closeDialogOnButtonClick(closeButton, manageWorksDialog);
 closeDialogOnBackdropClick(manageWorksDialog);
 
 export const manageWorksModal = manageWorksDialog;
+
+function handleDeletion(button, id) {
+  button.addEventListener("click", async (event) => {
+    event.preventDefault();
+    let response = await deleteWork(id);
+  
+    if (response.ok) {
+      // updating the local storage
+      window.localStorage.removeItem("works");
+  
+      // updating the modal gallery
+      const modalGalleryWork = document.querySelector(
+        `.modal_gallery [work_id="${id}"]`
+      );
+      modalGalleryWork.remove();
+  
+      // updating the gallery
+      const galleryWork = document.querySelector(
+        `.gallery [work_id="${id}"]`
+      );
+      galleryWork.remove();
+    }
+  });
+}
