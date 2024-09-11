@@ -15,16 +15,16 @@ addWorkDialog.innerHTML = `
     <div id="add_photo">
       <img src="./assets/icons/image.svg" alt="image icon">
       <label for="photo">+ Ajouter photo</label>
+      <p class="modal_p">jpg, png : 4mo max</p>
       <input type="file" id="photo" name="photo" accept=".jpg, .png"/>
-      <p>jpg, png : 4mo max</p>
     </div>
     <label for="title">Titre</label>
-    <input type="text" id="title" name="title"/>
+    <input class="form_input" type="text" id="title" name="title"/>
     <label for="category">Catégorie</label>
-    <select id="category" name="category"></select>
+    <select class="form_input" id="category" name="category"></select>
   </form>
   <img src="./assets/icons/bar.svg" alt="bar icon">
-  <input class="submit_new_work hidden" type="submit" form="add_work" value="Valider"/>
+  <input class="submit_new_work" type="submit" form="add_work" value="Valider" disabled/>
 </div>
 `;
 

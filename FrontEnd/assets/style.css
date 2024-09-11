@@ -203,6 +203,14 @@ h2 {
   color: #1d6154;
 }
 
+/*Forms*/
+.form_input {
+  height: 3.187rem; /*51px*/
+  font-size: 1.2em;
+  border: none;
+  box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+}
+
 /*Buttons*/
 input[type="submit"], dialog button {
   font-family: "Syne";
@@ -211,13 +219,20 @@ input[type="submit"], dialog button {
   background-color: #1d6154;
   margin: 2em auto;
   width: 180px;
+  height: 2.25rem; /*36px*/
   text-align: center;
+  border: none;
   border-radius: 60px;
   cursor: pointer;
 }
 
 input[type="submit"]:hover {
   background-color: #0e2f28;
+}
+
+input[type="submit"]:disabled {
+  background-color: #A7A7A7;
+  cursor:default;
 }
 
 footer {
@@ -328,12 +343,6 @@ footer nav ul {
   flex-direction: column;
 }
 
-#contact input {
-  height: 50px;
-  font-size: 1.2em;
-  border: none;
-  box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
-}
 #contact label {
   margin: 2em 0 1em 0;
 }
@@ -371,9 +380,6 @@ footer nav ul {
 .login_form input {
   margin-bottom: 1.875rem; /*30px*/
   width: 23.687rem; /*379px*/
-  height: 3.187rem; /*51px*/
-  border: none;
-  box-shadow: 4px 0px 14px 0px rgba(0, 0, 0, 0.09);
 }
 
 .errorMsg {
@@ -428,7 +434,7 @@ footer nav ul {
   display: none;
 }
 
-/* Modal */
+/* Modals */
 dialog[open] {
   display: flex;
   flex-direction: column;
@@ -447,12 +453,8 @@ dialog::backdrop {
 
 .modal_header {
   display: flex;
-  justify-content: space-between;
-  margin: 2rem 2.25rem 0 0; /* 32px 36px 0 0 */
-}
-
-#go_back {
-  cursor: pointer;
+  justify-content: end;
+  margin: 2rem 2.25rem 0 1.875rem; /* 32px 36px 0 30px */
 }
 
 .close_modal {
@@ -473,6 +475,19 @@ dialog::backdrop {
   margin-bottom: 2.875rem; /* 46px */
 }
 
+.modal_body button {
+  height: 2.25rem; /*36px*/
+  /* margin-top: 2.375rem; 38px*/ 
+  /* margin-bottom: 2.812rem; /*45px */
+  border: none;
+  cursor: pointer;
+}
+
+.modal_body button:hover {
+  background-color: #0E2F28;
+}
+
+/*Manage works modal*/
 .modal_gallery {
   display: grid;
   grid-template-columns: 4.803rem 4.803rem 4.803rem 4.803rem 4.803rem; /*76.86px*/
@@ -499,15 +514,67 @@ dialog::backdrop {
   cursor: pointer;
 }
 
-.modal_body button {
-  height: 2.25rem; /*36px*/
-  /* margin-top: 2.375rem; 38px*/ 
-  /* margin-bottom: 2.812rem; /*45px */
-  border: none;
+/*Add work modal*/
+#add_work_modal .modal_header {
+  justify-content: space-between;
+}
+
+#go_back {
+  width: 1.312rem; /*21px*/
   cursor: pointer;
 }
 
-.modal_body button:hover {
-  background-color: #0E2F28;
+#add_work {
+  display: flex;
+  flex-direction: column;
+}
+
+#add_work label {
+  margin-bottom: 0.625rem; /*10px*/
+}
+
+#add_photo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #E8F1F6;
+  border-radius: 3px;
+  margin-bottom: 1.875rem; /*30px*/
+}
+
+#add_photo img {
+margin-top: 1.406rem; /*22.5px*/
+}
+
+#add_photo label {
+  color: #306685;
+  text-align: center;
+  line-height: 2.25rem; /*36px*/
+  background-color: #CBD6DC;
+  width: 10.812rem; /*173px*/
+  height: 2.25rem; /*36px*/
+  border-radius: 50px;
+  margin-top: 0.625rem; /*10px*/
+  cursor: pointer;
+}
+
+#add_photo .modal_p {
+  font-size: 0.625rem;
+}
+
+#add_work input {
+  width: 26.25rem; /*420px*/
+}
+
+#title {
+  margin-bottom: 1.312rem; /*21px*/
+}
+
+#category {
+  margin-bottom: 2.937rem; /*47px*/
+}
+
+#add_work .submit_new_work {
+  margin-top: 2rem; /*32px*/
 }
 
