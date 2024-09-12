@@ -20,7 +20,7 @@ addWorkDialog.innerHTML = `
       <img src="./assets/icons/image.svg" alt="image icon">
       <label for="photo">+ Ajouter photo</label>
       <p class="modal_p">jpg, png : 4mo max</p>
-      <input type="file" id="photo" name="photo" accept=".jpg, .png" required/>
+      <input type="file" id="photo" name="image" accept=".jpg, .png" style="opacity:0" required/>
     </div>
     <div class="preview"></div>
     <label for="title">Titre</label>
@@ -43,8 +43,6 @@ let selectCategories = document.getElementById("category");
 const submitButton = document.getElementById("submit_new_work");
 
 // Uploading a photo
-fileInput.style.opacity = 0;
-
 fileInput.addEventListener("change", () => {
   const curPhoto = fileInput.files;
   handleFiles(curPhoto);
@@ -94,31 +92,31 @@ selectCategories.addEventListener("change", () => {
   }
 });
 
+// Sending the work once the form is submitted
 addWorkForm.addEventListener("submit", (event) => {
   event.preventDefault();
 
-  const formData = new FormData();
+  const formData = new FormData(addWorkForm);
   const token = window.localStorage.getItem("token");
-
-  let photo = null;
-  if (previewDiv.childElementCount !== 0) {
-    photo = previewDiv.firstChild.file;
-  }
-  let titleValue = title.value;
-  let categoryId = selectCategories.value;
-
-  formData.append("image", photo);
-  formData.append("title", titleValue);
-  formData.append("category", categoryId);
+  // const p = document.createElement("p");
+  // p.classList.add("add_work_form_error");
 
   const request = new XMLHttpRequest();
   request.open("POST", "http://localhost:5678/api/works", false);
-  request.setRequestHeader('Authorization', 'Bearer ' + token);
+  request.setRequestHeader("Authorization", "Bearer " + token);
   request.send(formData);
 
-  console.log(request.status);
+  // Resetting the local storage
+  window.localStorage.removeItem("works");
 
-  window.localStorage.removeItem('works');
+  // Resetting the form
+  const img = document.querySelector(".photo");
+  previewDiv.removeChild(img);
+  addPhotoDiv.removeAttribute("style");
+
+  title.value = "";
+
+  selectCategories.value = "";
 });
 
 // When click on the go back arrow button:
@@ -127,8 +125,6 @@ const goBackButton = document.getElementById("go_back");
 goBackButton.addEventListener("click", () => {
   // Closing the add work modal
   addWorkDialog.close();
-
-  // Cancelling the work's uploading
 
   // Opening the manage works modal and preventing the autofocus behavior
   manageWorksModal.inert = true;
@@ -143,30 +139,21 @@ closeDialogOnButtonClick(closeButton, addWorkDialog);
 // Closing the modal when the backdrop is clicked
 closeDialogOnBackdropClick(addWorkDialog);
 
-function emptyForm(form) {
-  let formElements = form.elements;
-
-  for (const element of formElements) {
-    if (element.nodeName === "INPUT" && element.type === "text") {
-      element.value = '';
-    } else if (element.nodeName === "INPUT" && element.type === "file") {
-      element.removeItem();
-    }
-  } {
-    
-  }
-    
-
-  if (fileInput.value !== null) {
-    fileInput.value = "";
-    addPhotoDiv.removeAttribute("style");
-    const img = document.querySelector(".photo");
-    img.parentNode.removeChild(img);
-  }
-}
+// /**
+//  * Renders the add work dialog, in its initial state.
+//  *
+//  * @param {HTMLDialogElement} addWorkDialog - The add work dialog that is to be rendered
+//  */
+// function renderAddWorkDialog(addWorkDialog) {
+// }
 
 export const addWorkModal = addWorkDialog;
 
+/**
+ * Displays a thumbnail of the image selected by the user.
+ * 
+ * @param {FileList} files - The FileList object returned by the files property of the HTML <input> element.
+ */
 function handleFiles(files) {
   for (let i = 0; i < files.length; i++) {
     const file = files[i];
