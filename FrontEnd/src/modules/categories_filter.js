@@ -4,14 +4,7 @@ import { getCategories } from "./works.js";
 const categoriesFilterDiv = document.querySelector(".categoriesFilter");
 
 // Getting the categories
-let categories = window.localStorage.getItem("categories");
-if (categories !== null) {
-  categories = JSON.parse(categories);
-} else {
-  categories = await getCategories();
-  const cateogriesValues = JSON.stringify(categories);
-  window.localStorage.setItem("categories", cateogriesValues);
-}
+let categories = await getCategories();
 
 // Building a category "Tous"
 const categoryAll = {};

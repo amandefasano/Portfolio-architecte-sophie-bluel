@@ -59,10 +59,31 @@ export async function deleteWork(id) {
  * @returns {Array} - A javascript array that contains all the categories.
  
 */
-export async function getCategories() {
+async function _getCategories() {
   return await fetch("http://localhost:5678/api/categories").then((response) =>
     response.json()
   );
+}
+
+/**
+ 
+ * Gets the categories from the local storage if stored there. If not stored in the local storage, 
+ * gets them from the api and stores them in the local storage.
+
+ * @returns {Array} - A Javascript array that contains all the categories. 
+ 
+*/
+export async function getCategories() {
+  let categories = window.localStorage.getItem("categories");
+  if (categories !== null) {
+    categories = JSON.parse(categories);
+  } else {
+    categories = await _getCategories();
+    const cateogriesValues = JSON.stringify(categories);
+    window.localStorage.setItem("categories", cateogriesValues);
+  }
+
+  return categories;
 }
 
 /**

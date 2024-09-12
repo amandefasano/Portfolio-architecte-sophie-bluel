@@ -542,6 +542,19 @@ dialog::backdrop {
   margin-bottom: 1.875rem; /*30px*/
 }
 
+.preview {
+  display: flex;
+  justify-content: center;
+  background-color: #E8F1F6;
+  border-radius: 3px;
+  margin-bottom: 1.875rem; /*30px*/
+}
+
+.preview .photo {
+  width: 8.062rem; /*129px*/
+  height: 10.562rem; /*169px*/
+}
+
 #add_photo img {
 margin-top: 1.406rem; /*22.5px*/
 }
@@ -567,14 +580,19 @@ margin-top: 1.406rem; /*22.5px*/
 }
 
 #title {
+  font-family: "Work Sans";
+  font-size: 0.875rem; /*14px*/
   margin-bottom: 1.312rem; /*21px*/
 }
 
 #category {
+  font-family: "Work Sans";
+  font-size: 0.875rem; /*14px*/
+  background-color: white;
   margin-bottom: 2.937rem; /*47px*/
 }
 
-#add_work .submit_new_work {
+#add_work #submit_new_work {
   margin-top: 2rem; /*32px*/
 }
 
