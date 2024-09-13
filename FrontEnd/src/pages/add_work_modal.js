@@ -1,7 +1,7 @@
 import { manageWorksModal } from "./manage_works_modal.js";
 import {
   getCategories,
-  getWorks, 
+  getWorks,
   createModalWorkFigure,
   createWorkFigure,
 } from "../modules/works.js";
@@ -28,8 +28,10 @@ addWorkDialog.innerHTML = `
       <input type="file" id="photo" name="image" accept=".jpg, .png" style="opacity:0" required/>
     </div>
     <div class="preview"></div>
+    <p class="errorMsg hidden" id="title_error"></p>
     <label for="title">Titre</label>
     <input class="form_input" type="text" id="title" name="title" required/>
+    <p class="errorMsg hidden" id="category_error"></p>
     <label for="category">Catégorie</label>
     <select class="form_input" id="category" name="category"></select>
   </form>
@@ -101,10 +103,23 @@ selectCategories.addEventListener("change", () => {
 addWorkForm.addEventListener("submit", async (event) => {
   event.preventDefault();
 
-  const formData = new FormData(addWorkForm);
+  // console.log(title.value.trim());
+
+  // Handling not valid infos
+  const titleError = document.getElementById('title_error');
+  const categoryError = document.getElementById('category_error');
+
+  if (title.value.trim() === "") {
+    titleError.classList.remove('hidden');
+    titleError.innerText = "Veuillez renseigner un titre";
+
+  } else if (selectCategories.value === "") {
+    categoryError.classList.remove('hidden');
+    categoryError.innerText = "Veuillez choisir une catégorie";
+
+  } else {
+    const formData = new FormData(addWorkForm);
   const token = window.localStorage.getItem("token");
-  // const p = document.createElement("p");
-  // p.classList.add("add_work_form_error");
 
   const request = new XMLHttpRequest();
   request.open("POST", "http://localhost:5678/api/works", false);
@@ -118,15 +133,17 @@ addWorkForm.addEventListener("submit", async (event) => {
   const img = document.querySelector(".photo");
   previewDiv.removeChild(img);
   addPhotoDiv.removeAttribute("style");
-
+  submitButton.disabled = true;
+  titleError.classList.add("hidden");
+  categoryError.classList.add("hidden");
   title.value = "";
-
   selectCategories.value = "";
 
   // Updating the gallery and the manage works modal gallery
   const newWork = await getNewWork();
   createWorkFigure(newWork);
   createModalWorkFigure(newWork);
+  }
 });
 
 // When click on the go back arrow button:
@@ -160,29 +177,38 @@ function handleFiles(files) {
   for (let i = 0; i < files.length; i++) {
     const file = files[i];
 
-    if (!file.type.startsWith("image/")) {
-      continue;
+    if (
+      !file.type.includes("jpg") &&
+      !file.type.includes("png") &&
+      !file.type.includes("jpeg")
+    ) {
+      const wrongTypeErrorMsg = document.createElement("p");
+      wrongTypeErrorMsg.innerText =
+        "Veuillez choisir une image de type .jpg ou .png";
+      wrongTypeErrorMsg.classList.add("errorMsg");
+      addPhotoDiv.appendChild(wrongTypeErrorMsg);
+    } else {
+
+      addPhotoDiv.setAttribute("style", "display:none");
+
+      const img = document.createElement("img");
+      img.classList.add("photo");
+      img.file = file;
+      previewDiv.appendChild(img);
+
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        img.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
     }
-
-    const img = document.createElement("img");
-    img.classList.add("photo");
-    img.file = file;
-    previewDiv.appendChild(img);
-
-    addPhotoDiv.setAttribute("style", "display:none");
-
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      img.src = e.target.result;
-    };
-    reader.readAsDataURL(file);
   }
 }
 
 /**
  * Gets the new created work
- * 
- * @returns {Object} - The new created work 
+ *
+ * @returns {Object} - The new created work
  */
 async function getNewWork() {
   let works = await getWorks();
