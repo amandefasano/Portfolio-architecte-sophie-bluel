@@ -106,47 +106,58 @@ addWorkForm.addEventListener("submit", async (event) => {
   // console.log(title.value.trim());
 
   // Handling not valid infos
-  const titleError = document.getElementById('title_error');
-  const categoryError = document.getElementById('category_error');
+  const titleError = document.getElementById("title_error");
+  const categoryError = document.getElementById("category_error");
 
   if (title.value.trim() === "") {
-    titleError.classList.remove('hidden');
+    titleError.classList.remove("hidden");
     titleError.innerText = "Veuillez renseigner un titre";
 
   } else if (selectCategories.value === "") {
-    categoryError.classList.remove('hidden');
+    categoryError.classList.remove("hidden");
     categoryError.innerText = "Veuillez choisir une catégorie";
-
+    
   } else {
     const formData = new FormData(addWorkForm);
-  const token = window.localStorage.getItem("token");
+    const token = window.localStorage.getItem("token");
 
-  const request = new XMLHttpRequest();
-  request.open("POST", "http://localhost:5678/api/works", false);
-  request.setRequestHeader("Authorization", "Bearer " + token);
-  request.send(formData);
+    const request = new XMLHttpRequest();
+    request.open("POST", "http://localhost:5678/api/works", false);
+    request.setRequestHeader("Authorization", "Bearer " + token);
+    request.send(formData);
 
-  // Resetting the local storage
-  window.localStorage.removeItem("works");
+    // Resetting the local storage
+    window.localStorage.removeItem("works");
 
-  // Resetting the form
-  const img = document.querySelector(".photo");
-  previewDiv.removeChild(img);
-  addPhotoDiv.removeAttribute("style");
-  submitButton.disabled = true;
-  titleError.classList.add("hidden");
-  categoryError.classList.add("hidden");
-  title.value = "";
-  selectCategories.value = "";
+    // Resetting the form
+    const img = document.querySelector(".photo");
+    previewDiv.removeChild(img);
 
-  // Updating the gallery and the manage works modal gallery
-  const newWork = await getNewWork();
-  createWorkFigure(newWork);
-  createModalWorkFigure(newWork);
+    addPhotoDiv.removeAttribute("style");
+    if (addPhotoDiv.childElementCount !== 0) {
+      const errorMsg = document.querySelectorAll("#add_photo .errorMsg");
+
+      for (const msg of errorMsg) {
+        msg.remove();
+      }
+    }
+
+    titleError.classList.add("hidden");
+    categoryError.classList.add("hidden");
+
+    submitButton.disabled = true;
+
+    title.value = "";
+    selectCategories.value = "";
+
+    // Updating the gallery and the manage works modal gallery
+    const newWork = await getNewWork();
+    createWorkFigure(newWork);
+    createModalWorkFigure(newWork);
   }
 });
 
-// When click on the go back arrow button:
+// Redirecting to the manage works modal when click on the go back arrow button
 const goBackButton = document.getElementById("go_back");
 
 goBackButton.addEventListener("click", () => {
@@ -188,7 +199,6 @@ function handleFiles(files) {
       wrongTypeErrorMsg.classList.add("errorMsg");
       addPhotoDiv.appendChild(wrongTypeErrorMsg);
     } else {
-
       addPhotoDiv.setAttribute("style", "display:none");
 
       const img = document.createElement("img");
