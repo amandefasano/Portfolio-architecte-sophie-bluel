@@ -1,5 +1,4 @@
-import { getWorks } from "../modules/works.js";
-import { deleteWork } from "../modules/works.js";
+import { getWorks, createModalWorkFigure } from "../modules/works.js";
 import { addWorkModal } from "./add_work_modal.js";
 import {
   closeDialogOnButtonClick,
@@ -21,38 +20,8 @@ manageWorksDialog.innerHTML = `
 </div>
 `;
 
-// Importing the photos
-let works = await getWorks();
-
-// Building the gallery
-const modalGalleryElement = document.querySelector(".modal_gallery");
-
-for (let i = 0; i < works.length; i++) {
-  // Building the figure which will contain the image and the delete button
-  const workFigure = document.createElement("figure");
-
-  // Building the delete button
-  const deleteIcon = document.createElement("img");
-  deleteIcon.src = "./assets/icons/delete.svg";
-  deleteIcon.alt = "trash can icon";
-  deleteIcon.classList.add("delete_work");
-
-  // Handling deletion
-  handleDeletion(deleteIcon, works[i].id);
-
-  // Building the image
-  const modalGalleryImg = document.createElement("img");
-  modalGalleryImg.src = works[i].imageUrl;
-  modalGalleryImg.classList.add("modal_work");
-
-  // Appending them to the div
-  workFigure.appendChild(deleteIcon);
-  workFigure.appendChild(modalGalleryImg);
-  workFigure.setAttribute("work_id", works[i].id);
-
-  // Appending the div to the gallery
-  modalGalleryElement.appendChild(workFigure);
-}
+// Filling up the modal gallery
+fillModalGallery();
 
 // When click on Add a picture button:
 // Closing the modal, opening the add work modal and preventing the autofocus behavior
@@ -78,33 +47,14 @@ export const manageWorksModal = manageWorksDialog;
 
 /**
  
- * Adds an event listener on the click of the specified button, which deletes the specified work.
-
- * @param {HTMLElement} button - The HTML element on which to click in order to delete the work
-
- * @param {Number} id - The id of the work that is to be deleted
+ * Fills up the manage works modal gallery div with figure elements that contain an image and a delete icon.
  
 */
-function handleDeletion(button, id) {
-  button.addEventListener("click", async (event) => {
-    event.preventDefault();
-    let response = await deleteWork(id);
-  
-    if (response.ok) {
-      // updating the local storage
-      window.localStorage.removeItem("works");
-  
-      // updating the modal gallery
-      const modalGalleryWork = document.querySelector(
-        `.modal_gallery [work_id="${id}"]`
-      );
-      modalGalleryWork.remove();
-  
-      // updating the gallery
-      const galleryWork = document.querySelector(
-        `.gallery [work_id="${id}"]`
-      );
-      galleryWork.remove();
-    }
-  });
+async function fillModalGallery() {
+  // Importing the works
+  let works = await getWorks();
+
+  for (let i = 0; i < works.length; i++) {
+    createModalWorkFigure(works[i]);
+  }
 }

@@ -88,31 +88,109 @@ export async function getCategories() {
 
 /**
  
- * Fills up the gallery div with figure elements that contain an image and a caption.
+ * Fills up the gallery with the works
  
 */
 export async function fillGallery() {
-  const galleryDiv = document.querySelector(".gallery");
-
+  // Importing the works
   let works = await getWorks();
 
   for (let i = 0; i < works.length; i++) {
-    // Creating the elements in the div
-    let figureElement = document.createElement("figure");
-    let imgElement = document.createElement("img");
-    let figcaptionElement = document.createElement("figcaption");
-
-    // Filling the elements
-    imgElement.src = works[i].imageUrl;
-    figcaptionElement.innerText = works[i].title;
-    figureElement.appendChild(imgElement);
-    figureElement.appendChild(figcaptionElement);
-
-    // Giving a category_name and an id to the figure
-    figureElement.setAttribute("category_name", works[i].category.name);
-    figureElement.setAttribute("work_id", works[i].id);
-
-    // Appending figureElement to the div "gallery"
-    galleryDiv.appendChild(figureElement);
+    createWorkFigure(works[i]);
   }
+}
+
+/**
+ 
+ * Creates a figure that contains the work's photo and title.
+ 
+*/
+export async function createWorkFigure(work) {
+  const galleryDiv = document.querySelector(".gallery");
+
+  // Creating the elements in the div
+  let figureElement = document.createElement("figure");
+  let imgElement = document.createElement("img");
+  let figcaptionElement = document.createElement("figcaption");
+
+  // Filling the elements
+  imgElement.src = work.imageUrl;
+  figcaptionElement.innerText = work.title;
+  figureElement.appendChild(imgElement);
+  figureElement.appendChild(figcaptionElement);
+
+  // Giving a category_name and an id to the figure
+  figureElement.setAttribute("category_name", work.category.name);
+  figureElement.setAttribute("work_id", work.id);
+
+  // Appending figureElement to the div "gallery"
+  galleryDiv.appendChild(figureElement);
+}
+
+/**
+ 
+ * Creates a manage works modal figure that contains the work image and a delete icon
+
+ * @param {Object} work - A work object 
+ 
+*/
+export function createModalWorkFigure(work) {
+  // Getting the gallery
+  const modalGalleryElement = document.querySelector(".modal_gallery");
+
+  // Building the figure which will contain the image and the delete button
+  const workFigure = document.createElement("figure");
+
+  // Building the delete button
+  const deleteIcon = document.createElement("img");
+  deleteIcon.src = "./assets/icons/delete.svg";
+  deleteIcon.alt = "trash can icon";
+  deleteIcon.classList.add("delete_work");
+
+  // Handling deletion
+  handleDeletion(deleteIcon, work.id);
+
+  // Building the image
+  const modalGalleryImg = document.createElement("img");
+  modalGalleryImg.src = work.imageUrl;
+  modalGalleryImg.classList.add("modal_work");
+
+  // Appending them to the figure
+  workFigure.appendChild(deleteIcon);
+  workFigure.appendChild(modalGalleryImg);
+  workFigure.setAttribute("work_id", work.id);
+
+  // Appending the figure to the gallery
+  modalGalleryElement.appendChild(workFigure);
+}
+
+/**
+ 
+ * Adds an event listener on the click of the specified button, which deletes the specified work.
+
+ * @param {HTMLElement} button - The HTML element on which to click in order to delete the work
+
+ * @param {Number} id - The id of the work that is to be deleted
+ 
+*/
+function handleDeletion(button, id) {
+  button.addEventListener("click", async (event) => {
+    event.preventDefault();
+    let response = await deleteWork(id);
+
+    if (response.ok) {
+      // updating the local storage
+      window.localStorage.removeItem("works");
+
+      // updating the modal gallery
+      const modalGalleryWork = document.querySelector(
+        `.modal_gallery [work_id="${id}"]`
+      );
+      modalGalleryWork.remove();
+
+      // updating the gallery
+      const galleryWork = document.querySelector(`.gallery [work_id="${id}"]`);
+      galleryWork.remove();
+    }
+  });
 }

@@ -1,7 +1,7 @@
 /**
  
  * Adds an event listener on the closing button in order to close the dialog when the 
- * button is clicked. This function also resets the form.
+ * button is clicked.
 
  * @param {HTMLElement} button - the closing button
 
@@ -10,13 +10,6 @@
  */
 export function closeDialogOnButtonClick(button, dialog) {
   button.addEventListener("click", () => {
-    // Resetting the form
-    const img = document.querySelector(".photo");
-    previewDiv.removeChild(img);
-    addPhotoDiv.removeAttribute("style");
-
-    emptyForm(addWorkForm);
-
     dialog.close();
   });
 }

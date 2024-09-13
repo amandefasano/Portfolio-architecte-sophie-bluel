@@ -1,5 +1,10 @@
 import { manageWorksModal } from "./manage_works_modal.js";
-import { getCategories } from "../modules/works.js";
+import {
+  getCategories,
+  getWorks, 
+  createModalWorkFigure,
+  createWorkFigure,
+} from "../modules/works.js";
 import {
   closeDialogOnButtonClick,
   closeDialogOnBackdropClick,
@@ -92,8 +97,8 @@ selectCategories.addEventListener("change", () => {
   }
 });
 
-// Sending the work once the form is submitted
-addWorkForm.addEventListener("submit", (event) => {
+// Sending the work once the form is submitted, resetting and updating the site's elements
+addWorkForm.addEventListener("submit", async (event) => {
   event.preventDefault();
 
   const formData = new FormData(addWorkForm);
@@ -117,6 +122,11 @@ addWorkForm.addEventListener("submit", (event) => {
   title.value = "";
 
   selectCategories.value = "";
+
+  // Updating the gallery and the manage works modal gallery
+  const newWork = await getNewWork();
+  createWorkFigure(newWork);
+  createModalWorkFigure(newWork);
 });
 
 // When click on the go back arrow button:
@@ -139,19 +149,11 @@ closeDialogOnButtonClick(closeButton, addWorkDialog);
 // Closing the modal when the backdrop is clicked
 closeDialogOnBackdropClick(addWorkDialog);
 
-// /**
-//  * Renders the add work dialog, in its initial state.
-//  *
-//  * @param {HTMLDialogElement} addWorkDialog - The add work dialog that is to be rendered
-//  */
-// function renderAddWorkDialog(addWorkDialog) {
-// }
-
 export const addWorkModal = addWorkDialog;
 
 /**
  * Displays a thumbnail of the image selected by the user.
- * 
+ *
  * @param {FileList} files - The FileList object returned by the files property of the HTML <input> element.
  */
 function handleFiles(files) {
@@ -175,4 +177,15 @@ function handleFiles(files) {
     };
     reader.readAsDataURL(file);
   }
+}
+
+/**
+ * Gets the new created work
+ * 
+ * @returns {Object} - The new created work 
+ */
+async function getNewWork() {
+  let works = await getWorks();
+  const work = works[works.length - 1];
+  return work;
 }
