@@ -131,10 +131,11 @@ addWorkForm.addEventListener("submit", async (event) => {
   } else if (selectCategories.value === "") {
     categoryError.classList.remove("hidden");
     categoryError.innerText = "Veuillez choisir une catégorie";
-    
+
   } else {
     const formData = new FormData(addWorkForm);
     const token = window.localStorage.getItem("token");
+    const requestError = document.getElementById("request_error");
 
     const request = new XMLHttpRequest();
     request.open("POST", "http://localhost:5678/api/works", false);
@@ -143,7 +144,6 @@ addWorkForm.addEventListener("submit", async (event) => {
     const response = request.responseText;
 
     if (response === null) {
-      const requestError = document.getElementById("request_error");
       requestError.classList.remove("hidden");
       requestError.innerText = "Désolés, quelque chose s'est mal passé. Veuillez réessayer.";
 
