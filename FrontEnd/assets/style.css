@@ -323,6 +323,8 @@ footer nav ul {
 
 .gallery img {
   width: 100%;
+  height: 30.625rem; /*490px*/
+  object-fit: fill;
 }
 
 /*Contact section*/

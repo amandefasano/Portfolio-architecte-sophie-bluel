@@ -26,6 +26,7 @@ addWorkDialog.innerHTML = `
       <label for="photo">+ Ajouter photo</label>
       <p class="modal_p">jpg, png : 4mo max</p>
       <input type="file" id="photo" name="image" accept=".jpg, .png" style="opacity:0" required/>
+      <p class="errorMsg hidden" id="photo_error"></p>
     </div>
     <div class="preview"></div>
     <p class="errorMsg hidden" id="title_error"></p>
@@ -53,19 +54,23 @@ const submitButton = document.getElementById("submit_new_work");
 // Uploading a photo
 fileInput.addEventListener("change", () => {
   const curPhoto = fileInput.files;
-
+  const photoError = document.getElementById("photo_error");
+  
   for (let i = 0; i < curPhoto.length; i++) {
     const file = curPhoto[i];
+
     if (
       !file.type.includes("jpg") &&
       !file.type.includes("png") &&
       !file.type.includes("jpeg")
     ) {
-      const wrongTypeErrorMsg = document.createElement("p");
-      wrongTypeErrorMsg.innerText =
-        "Veuillez choisir une image de type .jpg ou .png";
-      wrongTypeErrorMsg.classList.add("errorMsg");
-      addPhotoDiv.appendChild(wrongTypeErrorMsg);
+      photoError.innerText = "Veuillez choisir une image de type .jpg ou .png";
+      photoError.classList.remove("hidden");
+
+    } else if (file.size > 4000000) {
+      photoError.innerText = "L'image ne doit pas excéder 4mo";
+      photoError.classList.remove("hidden");
+
     } else {
       handleFiles(curPhoto);
 
@@ -156,13 +161,7 @@ addWorkForm.addEventListener("submit", async (event) => {
       previewDiv.removeChild(img);
 
       addPhotoDiv.removeAttribute("style");
-      if (addPhotoDiv.childElementCount !== 0) {
-        const errorMsg = document.querySelectorAll("#add_photo .errorMsg");
-
-        for (const msg of errorMsg) {
-          msg.remove();
-        }
-      }
+      photo_error.classList.add("hidden");
 
       titleError.classList.add("hidden");
       categoryError.classList.add("hidden");
