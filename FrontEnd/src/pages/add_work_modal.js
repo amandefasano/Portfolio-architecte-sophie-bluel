@@ -36,6 +36,7 @@ addWorkDialog.innerHTML = `
     <select class="form_input" id="category" name="category"></select>
   </form>
   <img src="./assets/icons/bar.svg" alt="bar icon">
+  <p class="errorMsg hidden" id="request_error"></p>
   <input id="submit_new_work" type="submit" form="add_work" value="Valider" disabled/>
 </div>
 `;
@@ -65,7 +66,6 @@ fileInput.addEventListener("change", () => {
         "Veuillez choisir une image de type .jpg ou .png";
       wrongTypeErrorMsg.classList.add("errorMsg");
       addPhotoDiv.appendChild(wrongTypeErrorMsg);
-
     } else {
       handleFiles(curPhoto);
 
@@ -127,9 +127,11 @@ addWorkForm.addEventListener("submit", async (event) => {
   if (title.value.trim() === "") {
     titleError.classList.remove("hidden");
     titleError.innerText = "Veuillez renseigner un titre";
+
   } else if (selectCategories.value === "") {
     categoryError.classList.remove("hidden");
     categoryError.innerText = "Veuillez choisir une catégorie";
+    
   } else {
     const formData = new FormData(addWorkForm);
     const token = window.localStorage.getItem("token");
@@ -137,38 +139,45 @@ addWorkForm.addEventListener("submit", async (event) => {
     const request = new XMLHttpRequest();
     request.open("POST", "http://localhost:5678/api/works", false);
     request.setRequestHeader("Authorization", "Bearer " + token);
-    const response = request.send(formData);
+    request.send(formData);
+    const response = request.responseText;
 
-    console.log(response);
+    if (response === null) {
+      const requestError = document.getElementById("request_error");
+      requestError.classList.remove("hidden");
+      requestError.innerText = "Désolés, quelque chose s'est mal passé. Veuillez réessayer.";
 
-    // Resetting the local storage
-    window.localStorage.removeItem("works");
+    } else {
+      // Resetting the local storage
+      window.localStorage.removeItem("works");
 
-    // Resetting the form
-    const img = document.querySelector(".photo");
-    previewDiv.removeChild(img);
+      // Resetting the form
+      const img = document.querySelector(".photo");
+      previewDiv.removeChild(img);
 
-    addPhotoDiv.removeAttribute("style");
-    if (addPhotoDiv.childElementCount !== 0) {
-      const errorMsg = document.querySelectorAll("#add_photo .errorMsg");
+      addPhotoDiv.removeAttribute("style");
+      if (addPhotoDiv.childElementCount !== 0) {
+        const errorMsg = document.querySelectorAll("#add_photo .errorMsg");
 
-      for (const msg of errorMsg) {
-        msg.remove();
+        for (const msg of errorMsg) {
+          msg.remove();
+        }
       }
+
+      titleError.classList.add("hidden");
+      categoryError.classList.add("hidden");
+      requestError.classList.add("hidden");
+
+      submitButton.disabled = true;
+
+      title.value = "";
+      selectCategories.value = "";
+
+      // Updating the gallery and the manage works modal gallery
+      const newWork = await getNewWork();
+      createWorkFigure(newWork);
+      createModalWorkFigure(newWork);
     }
-
-    titleError.classList.add("hidden");
-    categoryError.classList.add("hidden");
-
-    submitButton.disabled = true;
-
-    title.value = "";
-    selectCategories.value = "";
-
-    // Updating the gallery and the manage works modal gallery
-    const newWork = await getNewWork();
-    createWorkFigure(newWork);
-    createModalWorkFigure(newWork);
   }
 });
 
