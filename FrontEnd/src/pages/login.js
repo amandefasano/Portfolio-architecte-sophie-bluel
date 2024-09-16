@@ -16,13 +16,13 @@ loginForm.addEventListener("submit", async (event) => {
 
   const JSONidentifiers = JSON.stringify(identifiers);
 
-  
   const response = await submitForm(JSONidentifiers);
   
   if(response === 'KO') {
     const errorMsg = document.querySelector('.errorMsg');
 
     errorMsg.classList.remove('hidden');
+    
   } else {
     const token = response.token;
     window.localStorage.setItem('token', token);

@@ -52,11 +52,28 @@ const submitButton = document.getElementById("submit_new_work");
 // Uploading a photo
 fileInput.addEventListener("change", () => {
   const curPhoto = fileInput.files;
-  handleFiles(curPhoto);
 
-  // Enabling the submit button
-  if (selectCategories.value !== "" && title.value !== "") {
-    submitButton.disabled = false;
+  for (let i = 0; i < curPhoto.length; i++) {
+    const file = curPhoto[i];
+    if (
+      !file.type.includes("jpg") &&
+      !file.type.includes("png") &&
+      !file.type.includes("jpeg")
+    ) {
+      const wrongTypeErrorMsg = document.createElement("p");
+      wrongTypeErrorMsg.innerText =
+        "Veuillez choisir une image de type .jpg ou .png";
+      wrongTypeErrorMsg.classList.add("errorMsg");
+      addPhotoDiv.appendChild(wrongTypeErrorMsg);
+
+    } else {
+      handleFiles(curPhoto);
+
+      // Enabling the submit button
+      if (selectCategories.value !== "" && title.value !== "") {
+        submitButton.disabled = false;
+      }
+    }
   }
 });
 
@@ -103,8 +120,6 @@ selectCategories.addEventListener("change", () => {
 addWorkForm.addEventListener("submit", async (event) => {
   event.preventDefault();
 
-  // console.log(title.value.trim());
-
   // Handling not valid infos
   const titleError = document.getElementById("title_error");
   const categoryError = document.getElementById("category_error");
@@ -112,11 +127,9 @@ addWorkForm.addEventListener("submit", async (event) => {
   if (title.value.trim() === "") {
     titleError.classList.remove("hidden");
     titleError.innerText = "Veuillez renseigner un titre";
-
   } else if (selectCategories.value === "") {
     categoryError.classList.remove("hidden");
     categoryError.innerText = "Veuillez choisir une catégorie";
-    
   } else {
     const formData = new FormData(addWorkForm);
     const token = window.localStorage.getItem("token");
@@ -124,7 +137,9 @@ addWorkForm.addEventListener("submit", async (event) => {
     const request = new XMLHttpRequest();
     request.open("POST", "http://localhost:5678/api/works", false);
     request.setRequestHeader("Authorization", "Bearer " + token);
-    request.send(formData);
+    const response = request.send(formData);
+
+    console.log(response);
 
     // Resetting the local storage
     window.localStorage.removeItem("works");
@@ -188,30 +203,18 @@ function handleFiles(files) {
   for (let i = 0; i < files.length; i++) {
     const file = files[i];
 
-    if (
-      !file.type.includes("jpg") &&
-      !file.type.includes("png") &&
-      !file.type.includes("jpeg")
-    ) {
-      const wrongTypeErrorMsg = document.createElement("p");
-      wrongTypeErrorMsg.innerText =
-        "Veuillez choisir une image de type .jpg ou .png";
-      wrongTypeErrorMsg.classList.add("errorMsg");
-      addPhotoDiv.appendChild(wrongTypeErrorMsg);
-    } else {
-      addPhotoDiv.setAttribute("style", "display:none");
+    addPhotoDiv.setAttribute("style", "display:none");
 
-      const img = document.createElement("img");
-      img.classList.add("photo");
-      img.file = file;
-      previewDiv.appendChild(img);
+    const img = document.createElement("img");
+    img.classList.add("photo");
+    img.file = file;
+    previewDiv.appendChild(img);
 
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        img.src = e.target.result;
-      };
-      reader.readAsDataURL(file);
-    }
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      img.src = event.target.result;
+    };
+    reader.readAsDataURL(file);
   }
 }
 
