@@ -9,24 +9,36 @@ const loginForm = document.querySelector(".login_form");
 loginForm.addEventListener("submit", async (event) => {
   event.preventDefault();
 
-  const identifiers = {
-    email: event.target.querySelector("[name=email]").value,
-    password: event.target.querySelector("[name=pwd").value,
-  };
+  const email = event.target.querySelector("[name=email]");
+  const password = event.target.querySelector("[name=pwd");
+  const emailRegex = /^[a-zA-Z0-9._]+@[a-zA-Z0-9._]+.[a-z{2,}]/g;
+  const pwdRegex = /(?=.*\d)(?=.*[A-Z])(?=.*[a-z])[a-zA-Z0-9+]{6,}/g
+  const errorMsg = document.getElementById('login_error');
 
-  const JSONidentifiers = JSON.stringify(identifiers);
-
-  const response = await submitForm(JSONidentifiers);
+  if (emailRegex.test(email.value) && pwdRegex.test(password.value)) {
+    const identifiers = {
+      email: email.value,
+      password: password.value,
+    };
   
-  if(response === 'KO') {
-    const errorMsg = document.querySelector('.errorMsg');
+    const JSONidentifiers = JSON.stringify(identifiers);
+  
+    const response = await submitForm(JSONidentifiers);
+    
+    if(response === 'KO') {
+      errorMsg.classList.remove('hidden');
+      
+    } else {
+      const token = response.token;
+      window.localStorage.setItem('token', token);
+      
+      window.location.replace("./index.html");
+    }
 
-    errorMsg.classList.remove('hidden');
-    
   } else {
-    const token = response.token;
-    window.localStorage.setItem('token', token);
-    
-    window.location.replace("./index.html");
+    errorMsg.classList.remove('hidden');
   }
+
+  email.value = "";
+  password.value = "";
 });
