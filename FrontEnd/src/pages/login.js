@@ -12,7 +12,7 @@ loginForm.addEventListener("submit", async (event) => {
   const email = event.target.querySelector("[name=email]");
   const password = event.target.querySelector("[name=pwd");
   const emailRegex = /^[a-zA-Z0-9._]+@[a-zA-Z0-9._]+.[a-z{2,}]/g;
-  const pwdRegex = /(?=.*\d)(?=.*[A-Z])(?=.*[a-z])[a-zA-Z0-9+]{6,}/g
+  const pwdRegex = /(?=.*\d)(?=.*[A-Z])(?=.*[a-z])[[A-zÀ-ÿ0-9\p{P}\p{S}]{6,}/gu
   const errorMsg = document.getElementById('login_error');
 
   if (emailRegex.test(email.value) && pwdRegex.test(password.value)) {
