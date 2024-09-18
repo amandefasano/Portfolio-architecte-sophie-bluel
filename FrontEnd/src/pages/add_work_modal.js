@@ -157,17 +157,17 @@ addWorkForm.addEventListener("submit", async (event) => {
       window.localStorage.removeItem("works");
 
       // Resetting the form
-      const img = document.querySelector(".photo");
-      previewDiv.removeChild(img);
-
-      addPhotoDiv.removeAttribute("style");
-      photo_error.classList.add("hidden");
-
       titleError.classList.add("hidden");
       categoryError.classList.add("hidden");
       requestError.classList.add("hidden");
 
       submitButton.disabled = true;
+
+      const img = document.querySelector(".photo");
+      previewDiv.removeChild(img);
+
+      addPhotoDiv.removeAttribute("style");
+      photo_error.classList.add("hidden");
 
       title.value = "";
       selectCategories.value = "";
