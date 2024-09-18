@@ -197,9 +197,6 @@ goBackButton.addEventListener("click", () => {
 const closeButton = document.querySelector("#add_work_modal .close_modal");
 closeDialogOnButtonClick(closeButton, addWorkDialog);
 
-// Closing the modal when the backdrop is clicked
-closeDialogOnBackdropClick(addWorkDialog);
-
 export const addWorkModal = addWorkDialog;
 
 /**

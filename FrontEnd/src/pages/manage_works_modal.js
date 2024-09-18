@@ -40,9 +40,6 @@ modalAddPictureButton.addEventListener("click", () => {
 const closeButton = document.querySelector("#manage_works_modal .close_modal");
 closeDialogOnButtonClick(closeButton, manageWorksDialog);
 
-// Closing the modal when the backdrop is clicked
-closeDialogOnBackdropClick(manageWorksDialog);
-
 export const manageWorksModal = manageWorksDialog;
 
 /**

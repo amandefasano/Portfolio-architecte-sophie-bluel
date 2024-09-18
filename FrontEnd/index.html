@@ -56,10 +56,10 @@
             <img src="./assets/icons/edit.svg" alt="edit icon" />
             <p>modifier</p>
           </div>
-          <dialog id="manage_works_modal">
+          <dialog id="manage_works_modal" onclick="event.target==this && this.close()">
             <!-- modal elements (see manage_works_modal.js) -->
           </dialog>
-          <dialog id="add_work_modal">
+          <dialog id="add_work_modal" onclick="event.target==this && this.close()">
             <!-- modal elements (see add_work_modal.js) -->
           </dialog>
         </div>
