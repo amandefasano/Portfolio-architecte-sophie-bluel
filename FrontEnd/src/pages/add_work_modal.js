@@ -6,8 +6,7 @@ import {
   createWorkFigure,
 } from "../modules/works.js";
 import {
-  closeDialogOnButtonClick,
-  closeDialogOnBackdropClick,
+  closeDialogOnButtonClick
 } from "../modules/modal.js";
 
 // Building the add work modal
