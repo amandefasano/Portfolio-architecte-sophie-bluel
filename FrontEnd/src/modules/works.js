@@ -6,9 +6,12 @@
  
 */
 async function _getWorks() {
-  return await fetch("http://localhost:5678/api/works").then((response) =>
-    response.json()
-  );
+  await fetch("http://localhost:5678/api/works").then((response) => {
+    if (!response.ok) {
+      console.log(`erreur HTTP! statut: ${response.status}`);
+    }
+    return response.json();
+  });
 }
 
 /**
@@ -44,10 +47,14 @@ export async function deleteWork(id) {
   const token = window.localStorage.getItem("token");
 
   if (token !== null) {
-    return await fetch("http://localhost:5678/api/works/" + id, {
+    await fetch("http://localhost:5678/api/works/" + id, {
       method: "DELETE",
       headers: { Authorization: "Bearer " + token },
       body: null,
+    }).then((response) => {
+      if (!response.ok) {
+        console.log(`erreur HTTP! statut: ${response.status}`);
+      }
     });
   }
 }
@@ -60,8 +67,13 @@ export async function deleteWork(id) {
  
 */
 async function _getCategories() {
-  return await fetch("http://localhost:5678/api/categories").then((response) =>
-    response.json()
+  return await fetch("http://localhost:5678/api/categories").then(
+    (response) => {
+      if (!response.ok) {
+        console.log(`erreur HTTP! statut: ${response.status}`);
+      }
+      return response.json();
+    }
   );
 }
 
