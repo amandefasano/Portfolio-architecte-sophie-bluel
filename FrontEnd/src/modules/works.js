@@ -188,21 +188,19 @@ export function createModalWorkFigure(work) {
 function handleDeletion(button, id) {
   button.addEventListener("click", async (event) => {
     event.preventDefault();
-    let response = await deleteWork(id);
+    await deleteWork(id);
 
-    if (response.ok) {
-      // updating the local storage
-      window.localStorage.removeItem("works");
+    // updating the local storage
+    window.localStorage.removeItem("works");
 
-      // updating the modal gallery
-      const modalGalleryWork = document.querySelector(
-        `.modal_gallery [work_id="${id}"]`
-      );
-      modalGalleryWork.remove();
+    // updating the modal gallery
+    const modalGalleryWork = document.querySelector(
+      `.modal_gallery [work_id="${id}"]`
+    );
+    modalGalleryWork.remove();
 
-      // updating the gallery
-      const galleryWork = document.querySelector(`.gallery [work_id="${id}"]`);
-      galleryWork.remove();
-    }
+    // updating the gallery
+    const galleryWork = document.querySelector(`.gallery [work_id="${id}"]`);
+    galleryWork.remove();
   });
 }
