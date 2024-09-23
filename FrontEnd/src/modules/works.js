@@ -6,9 +6,9 @@
  
 */
 async function _getWorks() {
-  await fetch("http://localhost:5678/api/works").then((response) => {
+  return await fetch("http://localhost:5678/api/works").then((response) => {
     if (!response.ok) {
-      console.log(`erreur HTTP! statut: ${response.status}`);
+      console.log(`Erreur HTTP! Statut : ${response.status}`);
     }
     return response.json();
   });
